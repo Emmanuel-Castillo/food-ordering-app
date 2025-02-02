@@ -1,4 +1,5 @@
 "use client";
+import { signIn } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -12,19 +13,21 @@ export default function RegisterPage() {
   async function handleFormSubmit(ev) {
     ev.preventDefault();
     setCreatingUser(true);
-    try {
-      await fetch(`/api/register`, {
-        method: "POST",
-        body: JSON.stringify({ email, password }),
-        headers: { "Content-Type": "application/json" },
-      });
-      setCreatingUser(false);
+    setUserCreated(false)
+    setError(false);
+    const response = await fetch(`/api/register`, {
+      method: "POST",
+      body: JSON.stringify({ email, password }),
+      headers: { "Content-Type": "application/json" },
+    });
+    if (response.ok) {
       setUserCreated(true);
       setEmail("");
       setPassword("");
-    } catch (e) {
+    } else {
       setError(true);
     }
+    setCreatingUser(false);
   }
   return (
     <section className="mt-8">
@@ -34,6 +37,13 @@ export default function RegisterPage() {
           User created.
           <br />
           Now you can <Link href={"/login"}>log in &raquo;</Link>
+        </div>
+      )}
+      {error && (
+        <div className="my-4 text-center">
+          An error has occurred.
+          <br />
+          Please try again later.
         </div>
       )}
       <form className="block max-w-xs mx-auto" onSubmit={handleFormSubmit}>
@@ -58,10 +68,13 @@ export default function RegisterPage() {
         <div className="my-4 text-center text-gray-500">
           or login with provider
         </div>
-        <button className="flex gap-4 justify-center">
+        <button type="button" className="flex gap-4 justify-center" onClick={() => signIn('google', {callbackUrl:'/'})}>
           <Image src={"/google.png"} alt="" width={24} height={24} />
           Login with Google
         </button>
+        <div className="text-center my-4 text-gray-500 border-t pt-4">
+          Existing account?{' '}<Link className="underline" href={'/login'}>Login here &raquo;</Link>
+        </div>
       </form>
       <div></div>
     </section>
