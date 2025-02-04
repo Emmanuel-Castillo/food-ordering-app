@@ -10,6 +10,8 @@ export default function Header() {
   if (userName && userName.includes(" ")) {
     userName = userName.split(" ")[0];
   }
+
+  console.log(session.status)
   return (
     <header className="flex items-center justify-between">
       <nav className="flex items-center gap-8 text-gray-500 font-semibold">
@@ -27,7 +29,7 @@ export default function Header() {
             <Link className="whitespace-nowrap" href={"/profile"}>Hello, {userName}</Link>
             <button
               className="bg-primary rounded-full text-white px-8 py-2"
-              onClick={() => signOut()}
+              onClick={() => signOut({callbackUrl: '/login'})}
             >
               Logout
             </button>
