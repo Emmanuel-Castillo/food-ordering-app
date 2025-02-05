@@ -11,7 +11,6 @@ export default function Header() {
     userName = userName.split(" ")[0];
   }
 
-  console.log(session.status)
   return (
     <header className="flex items-center justify-between">
       <nav className="flex items-center gap-8 text-gray-500 font-semibold">

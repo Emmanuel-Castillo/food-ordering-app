@@ -35,6 +35,7 @@ export default function EditableImage({ link, setLink }) {
     <>
       {link && (
         <Image
+          priority
           className="rounded-lg w-full h-full mb-1"
           src={link}
           width={350}

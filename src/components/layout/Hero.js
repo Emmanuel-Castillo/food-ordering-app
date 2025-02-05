@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Right from "../icons/Right";
+import pizzaPic from "/public/pizza.png"
 
 export default function Hero() {
   return (
@@ -23,17 +24,19 @@ export default function Hero() {
           </button>
           <button className="flex items-center border-0 gap-2 py-2 text-gray-600 font-semibold">
             Learn More
-            <Right/>
+            <Right />
           </button>
         </div>
       </div>
 
       <div className="relative">
         <Image
-          src={"/pizza.png"}
-          layout="fill"
-          objectFit="contain"
+          priority
+          src={pizzaPic}
+          fill
+          style={{ objectFit: "contain" }}
           alt="pizza"
+          sizes="(max-width: 518px) (max-height: 346px)"
         />
       </div>
     </section>
