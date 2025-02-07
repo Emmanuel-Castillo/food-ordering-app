@@ -7,7 +7,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { redirect, useParams } from "next/navigation";
-import DeleteButton from "@/components/DeleteButton"
+import DeleteButton from "@/components/DeleteButton";
 
 export default function EditMenuItemPage() {
   const { id } = useParams();
@@ -47,20 +47,19 @@ export default function EditMenuItemPage() {
 
   async function handleDeleteClick() {
     const promise = new Promise(async (resolve, reject) => {
-      const res = await fetch('/api/menu-items?_id='+id, {
-      method: 'DELETE'
-    })
-    res.ok ? resolve() : reject()
-    })
+      const res = await fetch("/api/menu-items?_id=" + id, {
+        method: "DELETE",
+      });
+      res.ok ? resolve() : reject();
+    });
 
     await toast.promise(promise, {
-      loading: 'Deleting...',
-      success: 'Deleted',
-      error: 'Error'
-    })
+      loading: "Deleting...",
+      success: "Deleted",
+      error: "Error",
+    });
 
-    setRedirectToItems(true)
-    
+    setRedirectToItems(true);
   }
 
   if (redirectToItems) {
@@ -84,12 +83,7 @@ export default function EditMenuItemPage() {
           Show all menu items
         </Link>
       </div>
-      <MenuItemForm menuItem={menuItem} onSubmit={handleFormSubmit} />
-      <div className="max-w-md mx-auto mt-4">
-        <div className="max-w-xs ml-auto pl-4">
-          <DeleteButton label={'Delete this menu item'} onDelete={handleDeleteClick}/>
-        </div>
-      </div>
+      <MenuItemForm menuItem={menuItem} onSubmit={handleFormSubmit} onDelete={handleDeleteClick}/>
     </section>
   );
 }

@@ -1,24 +1,58 @@
-"use client"
+"use client";
+import UserForm from "@/components/layout/UserForm";
 import UserTabs from "@/components/layout/UserTabs";
 import { useProfile } from "@/components/UseProfile";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 export default function EditUserPage() {
-    const {loading, data} = useProfile()
+  const { loading, data } = useProfile();
+  const { id } = useParams();
+  console.log(id);
+  const [user, setUser] = useState(null);
 
-    if (loading) {
-        return 'Loading user profile...'
-    }
+  useEffect(() => {
+    fetch("/api/profile?_id=" + id).then((res) => {
+      res.json().then((user) => {
+        console.log(user);
+        setUser(user);
+      });
+    });
+  }, []);
 
-    if (!data.admin) {
-        return 'Not an admin'
-    }
+  async function handleSaveButtonClick(ev, data) {
+    ev.preventDefault();
+    const promise = new Promise(async (resolve, reject) => {
+      const response = await fetch("/api/profile", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...data, _id: id }),
+      });
+      response.ok ? resolve() : reject();
+    });
 
-    return (
-        <section className="mt-8 mx-auto max-w-2xl">
-            <UserTabs isAdmin={data.admin}/>
-            <div className="mt-8">
+    await toast.promise(promise, {
+      loading: "Saving user data...",
+      success: "Saved!",
+      error: "Save error...",
+    });
+  }
 
-            </div>
-        </section>
-    )
+  if (loading) {
+    return "Loading user profile...";
+  }
+
+  if (!data.admin) {
+    return "Not an admin";
+  }
+
+  return (
+    <section className="mt-8 mx-auto max-w-2xl">
+      <UserTabs isAdmin={data.admin} />
+      <div className="mt-8">
+        <UserForm user={user} onSave={handleSaveButtonClick} />
+      </div>
+    </section>
+  );
 }
