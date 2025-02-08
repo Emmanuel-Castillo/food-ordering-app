@@ -47,7 +47,7 @@ export default function MenuItemForm({ onSubmit, menuItem, onDelete }) {
       }
     >
       <div
-        className="grid gap-4 items-start"
+        className="md:grid gap-4 items-start"
         style={{ gridTemplateColumns: ".3fr .7fr" }}
       >
         <div>
@@ -72,7 +72,7 @@ export default function MenuItemForm({ onSubmit, menuItem, onDelete }) {
             onChange={(ev) => setCategory(ev.target.value)}
           >
             {categories.length > 0 &&
-              categories.map((c) => <option value={c._id}>{c.name}</option>)}
+              categories.map((c, index) => <option key={index} value={c._id}>{c.name}</option>)}
           </select>
           <label>Base price</label>
           <input

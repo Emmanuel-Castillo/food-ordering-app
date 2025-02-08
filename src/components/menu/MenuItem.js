@@ -1,6 +1,5 @@
 import { useContext, useState } from "react";
 import { CartContext } from "../AppContext";
-import toast from "react-hot-toast";
 import MenuItemTile from "@/components/menu/MenuItemTile";
 import Image from "next/image";
 import FlyingButton from "react-flying-item";
@@ -45,6 +44,7 @@ export default function MenuItem(menuItem) {
       selectedPrice += extra.price;
     }
   }
+
   return (
     <>
       {showPopup && (
@@ -60,13 +60,13 @@ export default function MenuItem(menuItem) {
               className="overflow-y-scroll p-2"
               style={{ maxHeight: "calc(100vh - 100px)" }}
             >
-              <Image
-                src={image}
+              {image && image.trim() !== "" && <Image
+                src={image !== "" ? image : null}
                 alt={name}
                 width={300}
                 height={200}
                 className="mx-auto"
-              />
+              />}
               <h2 className="text-lg font-bold text-center mb-2">{name}</h2>
               <p className="text-center text-gray-500 text-sm mb-2">
                 {description}
@@ -74,13 +74,14 @@ export default function MenuItem(menuItem) {
               {sizes?.length > 0 && (
                 <div className="py-2">
                   <h3 className="text-center text-gray-700">Pick your size</h3>
-                  {sizes.map((size) => (
-                    <label className="flex items-center gap-2 p-4 border rounded-md mb-1">
+                  {sizes.map((size, index) => (
+                    <label key={index} className="flex items-center gap-2 p-4 border rounded-md mb-1">
                       <input
                         type="radio"
                         name="size"
                         onClick={() => setSelectedSize(size)}
                         checked={selectedSize?.name === size.name}
+                        readOnly
                       />{" "}
                       {size.name} ${basePrice + size.price}
                     </label>
@@ -92,8 +93,8 @@ export default function MenuItem(menuItem) {
                   <h3 className="text-center text-gray-700">
                     Pick your extra toppings
                   </h3>
-                  {extraIngredientPrices.map((extraThing) => (
-                    <label className="flex items-center gap-2 p-4 border rounded-md mb-1">
+                  {extraIngredientPrices.map((extraThing, index) => (
+                    <label key={index} className="flex items-center gap-2 p-4 border rounded-md mb-1">
                       <input
                         type="checkbox"
                         name={extraThing.name}
@@ -105,14 +106,14 @@ export default function MenuItem(menuItem) {
                 </div>
               )}
               <div className="flying-button-parent">
-                <FlyingButton targetTop={"5%"} targetLeft={"95%"} src={image}>
+                {image && <FlyingButton targetTop={"5%"} targetLeft={"95%"} src={image !== "" ? image : null}>
                   <div
                     className="primary sticky bottom-2"
                     onClick={handleAddToCartButtonClick}
                   >
                     Add to Cart +${selectedPrice}
                   </div>
-                </FlyingButton>
+                </FlyingButton>}
               </div>
 
               <button

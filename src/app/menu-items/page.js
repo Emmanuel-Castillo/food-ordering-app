@@ -46,7 +46,7 @@ export default function MenuItemsPage() {
                 className="bg-gray-200 rounded-lg p-4"
               >
                 <div className="relative w-[100px] h-[100px] mx-auto">
-                  {item.image.length > 0 && (
+                  {item.image && (
                     <Image
                       priority
                       className="rounded-md"

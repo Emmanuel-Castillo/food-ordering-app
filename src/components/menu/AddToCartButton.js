@@ -9,11 +9,11 @@ export default function AddToCartButton({
   if (!hasSizesOrExtras) {
     return (
       <div className="flying-button-parent mt-4">
-        <FlyingButton targetTop={"5%"} targetLeft={"95%"} src={image}>
+        {image && <FlyingButton targetTop={"5%"} targetLeft={"95%"} src={image}>
           <div onClick={onClick}>
             <span>Add to cart ${basePrice}</span>
           </div>
-        </FlyingButton>
+        </FlyingButton>}
       </div>
     );
   }

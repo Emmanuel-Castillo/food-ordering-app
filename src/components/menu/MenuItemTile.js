@@ -11,7 +11,7 @@ export default function MenuItemTile({ onAddToCart, ...item }) {
       hover:bg-white hover:shadow-md hover:shadow-black/25 transition-all"
     >
       <div className="text-center">
-        <img className="max-h-24 block mx-auto" src={image} alt="pizza" />
+        {image && <img className="max-h-24 block mx-auto" src={image} alt="pizza" />}
       </div>
 
       <h4 className="font-semibold text-xl my-3">{name}</h4>

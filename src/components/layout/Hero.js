@@ -4,8 +4,8 @@ import pizzaPic from "/public/pizza.png"
 
 export default function Hero() {
   return (
-    <section className="hero mt-4">
-      <div className="py-12">
+    <section className="hero md:mt-4">
+      <div className="py-8 md:py-12">
         <h1 className="text-4xl font-semibold">
           Everything
           <br />
@@ -29,7 +29,7 @@ export default function Hero() {
         </div>
       </div>
 
-      <div className="relative">
+      <div className="relative hidden md:block">
         <Image
           priority
           src={pizzaPic}

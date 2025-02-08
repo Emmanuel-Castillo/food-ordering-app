@@ -1,10 +1,11 @@
 import { User } from "@/app/models/User"
 import mongoose from "mongoose"
-import NextAuth from "next-auth"
+import NextAuth, { getServerSession } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
 import GoogleProvider from "next-auth/providers/google"
 import { MongoDBAdapter } from "@auth/mongodb-adapter"
 import client from "@/libs/mongoconnect"
+import { UserInfo } from "@/app/models/UserInfo"
 
 const bcrypt = require('bcrypt')
 
@@ -43,6 +44,21 @@ export const authOptions = {
         }
       })
   ]
+}
+
+export async function isAdmin() {
+  const session = await getServerSession(authOptions)
+  const userEmail = session?.user?.email
+  if (!userEmail) {
+    return false
+  }
+
+  else {
+    const userInfo = await UserInfo.findOne({email: userEmail})
+    if (!userInfo) 
+      return false
+    return userInfo.admin
+  }
 }
 
 const handler = NextAuth(authOptions)

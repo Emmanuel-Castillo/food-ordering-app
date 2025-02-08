@@ -9,13 +9,11 @@ import toast from "react-hot-toast";
 export default function EditUserPage() {
   const { loading, data } = useProfile();
   const { id } = useParams();
-  console.log(id);
   const [user, setUser] = useState(null);
 
   useEffect(() => {
     fetch("/api/profile?_id=" + id).then((res) => {
       res.json().then((user) => {
-        console.log(user);
         setUser(user);
       });
     });

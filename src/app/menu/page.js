@@ -17,16 +17,18 @@ export default function MenuPage() {
   return (
     <section className="mt-8">
       {categories?.length > 0 &&
-        categories.map((c) => (
-          <div>
+        categories.map((c, index) => (
+          <div key={index}>
             <div className="text-center">
               <SectionHeaders mainHeader={c.name} />
             </div>
-            <div className="grid grid-cols-3 gap-4 mt-6 mb-12">
+            <div className="grid sm:grid-cols-3 gap-4 mt-6 mb-12">
               {menuItems
                 .filter((item) => item.category === c._id)
-                .map((item) => (
-                  <MenuItem {...item} />
+                .map((item, index) => (
+                  <div key={index}>
+                    <MenuItem {...item} />
+                  </div>
                 ))}
             </div>
           </div>

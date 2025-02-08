@@ -25,7 +25,7 @@ export default function UserForm({ user, onSave }) {
 
   const { data: loggedInUserData } = useProfile();
   return (
-    <div className="flex gap-4">
+    <div className="md:flex gap-4">
       <div>
         <div className=" p-2 rounded-lg relative max-w-[120px]">
           <EditableImage link={image} setLink={setImage} />
@@ -82,6 +82,7 @@ export default function UserForm({ user, onSave }) {
                 value={user?.admin}
                 checked={admin}
                 onClick={(ev) => setAdmin(ev.target.checked)}
+                readOnly
               />
               <span>Admin</span>
             </label>
