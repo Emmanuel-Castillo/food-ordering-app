@@ -1,4 +1,4 @@
-import FlyingButton from "react-flying-item";
+const FlyingButton = require('react-flying-item');
 
 export default function AddToCartButton({
   image,
