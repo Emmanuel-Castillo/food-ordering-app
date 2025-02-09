@@ -36,7 +36,7 @@ export default function MenuItemsPage() {
       </div>
       <div>
         {menuItems.length > 0 && <h2 className="text-sm text-gray-500 mt-8">Edit menu item:</h2>}
-        <div className="grid grid-cols-3 gap-2">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
           {
             menuItems.length > 0 &&
             menuItems.map((item, index) => (

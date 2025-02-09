@@ -37,9 +37,9 @@ export default function OrdersPage() {
         {loadingOrders && <div>Loading orders...</div>}
         {orders?.length > 0 &&
           orders.map((order, index) => (
-            <div key={index} className="bg-gray-100 mb-2 p-4 rounded-lg items-center md:flex">
-              <div className="grow flex items-center gap-5">
-                <div>
+            <div key={index} className="bg-gray-100 mb-2 p-4 rounded-lg items-center sm:flex">
+              <div className="grow sm:flex items-center gap-5">
+                <div className="flex justify-center">
                   <div
                     className={
                       (order.paid ? "bg-green-500" : "bg-red-400") +
@@ -49,12 +49,12 @@ export default function OrdersPage() {
                     {order.paid ? "Paid" : "Not paid"}
                   </div>
                 </div>
-                <div>
-                  <div>{order.userEmail}</div>
+                <div className="my-4 sm:my-0 text-center">
+                  <div className="text-wrap truncate sm:text-nowrap ">{order.userEmail}</div>
                   <div className="text-gray-600 text-sm">
                     Order Date: {dbTimeForHuman(order.createdAt)}
                   </div>
-                  <div className="text-gray-500 text-xs max-w-80">
+                  <div className="text-gray-500 text-xs text-center line-clamp-2 md:max-w-80 ">
                     {order.cartProducts.map((p) => p.name).join(",")}
                   </div>
                 </div>

@@ -36,12 +36,18 @@ export default function AppProvider({ children }) {
   }
 
   function addToCart(product, size = null, extras = []) {
-    setCartProducts((prevProducts) => {
-      const cartProduct = { ...product, size, extras };
-      const newProducts = [...prevProducts, cartProduct];
-      saveCartProductsToLocalStorage(newProducts);
-      return newProducts;
-    });
+    try {
+
+      setCartProducts((prevProducts) => {
+        const cartProduct = { ...product, size, extras };
+        const newProducts = [...prevProducts, cartProduct];
+        saveCartProductsToLocalStorage(newProducts);
+        return newProducts;
+      });
+      return Response.json(true)
+    } catch (e) {
+      return Response.json(false)
+    }
   }
 
   function clearCart() {

@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { CartContext } from "../AppContext";
 import MenuItemTile from "@/components/menu/MenuItemTile";
 import Image from "next/image";
-import FlyingButton from "react-flying-item";
+import toast from "react-hot-toast";
 
 export default function MenuItem(menuItem) {
   const { image, name, description, basePrice, sizes, extraIngredientPrices } =
@@ -19,8 +19,16 @@ export default function MenuItem(menuItem) {
       return;
     }
 
-    addToCart(menuItem, selectedSize, selectedExtras);
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    const promise = new Promise(async (resolve, reject) => {
+      const response = await addToCart(menuItem, selectedSize, selectedExtras);
+      response ? resolve() : reject()
+    })
+    
+    toast.promise(promise, {
+      loading: 'Adding item to cart...',
+      success: 'Item added to cart!',
+      error: 'Error, something went wrong...'
+    })
     setShowPopup(false);
   }
 
@@ -60,13 +68,15 @@ export default function MenuItem(menuItem) {
               className="overflow-y-scroll p-2"
               style={{ maxHeight: "calc(100vh - 100px)" }}
             >
-              {image && image.trim() !== "" && <Image
-                src={image !== "" ? image : null}
-                alt={name}
-                width={300}
-                height={200}
-                className="mx-auto"
-              />}
+              {image && image.trim() !== "" && (
+                <Image
+                  src={image !== "" ? image : null}
+                  alt={name}
+                  width={300}
+                  height={200}
+                  className="mx-auto"
+                />
+              )}
               <h2 className="text-lg font-bold text-center mb-2">{name}</h2>
               <p className="text-center text-gray-500 text-sm mb-2">
                 {description}
@@ -75,7 +85,10 @@ export default function MenuItem(menuItem) {
                 <div className="py-2">
                   <h3 className="text-center text-gray-700">Pick your size</h3>
                   {sizes.map((size, index) => (
-                    <label key={index} className="flex items-center gap-2 p-4 border rounded-md mb-1">
+                    <label
+                      key={index}
+                      className="flex items-center gap-2 p-4 border rounded-md mb-1"
+                    >
                       <input
                         type="radio"
                         name="size"
@@ -94,7 +107,10 @@ export default function MenuItem(menuItem) {
                     Pick your extra toppings
                   </h3>
                   {extraIngredientPrices.map((extraThing, index) => (
-                    <label key={index} className="flex items-center gap-2 p-4 border rounded-md mb-1">
+                    <label
+                      key={index}
+                      className="flex items-center gap-2 p-4 border rounded-md mb-1"
+                    >
                       <input
                         type="checkbox"
                         name={extraThing.name}
@@ -105,16 +121,13 @@ export default function MenuItem(menuItem) {
                   ))}
                 </div>
               )}
-              <div className="flying-button-parent">
-                {image && <FlyingButton targetTop={"5%"} targetLeft={"95%"} src={image !== "" ? image : null}>
-                  <div
-                    className="primary sticky bottom-2"
-                    onClick={handleAddToCartButtonClick}
-                  >
-                    Add to Cart +${selectedPrice}
-                  </div>
-                </FlyingButton>}
-              </div>
+                <button
+                type="button"
+                  className="mt-4 bg-primary text-white rounded-full px-8 py-2"
+                  onClick={handleAddToCartButtonClick}
+                >
+                  Add to Cart +${selectedPrice}
+                </button>
 
               <button
                 className="sticky bottom-2 mt-4"
