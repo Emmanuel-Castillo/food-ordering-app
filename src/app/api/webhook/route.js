@@ -1,6 +1,5 @@
 const stripe = require('stripe')(process.env.STRIPE_SK)
 import { Order } from '@/app/models/Order'
-import {buffer} from 'micro'
 export async function POST(req) {
     // Grab stripe signature
     const sig = req.headers.get('stripe-signature')

@@ -7,7 +7,7 @@ import client from "@/libs/mongoconnect";
 import { User } from "@/app/models/User";
 
 export const authOptions = {
-  secret: process.env.SECRET,
+  secret: process.env.NEXTAUTH_SECRET,
   adapter: MongoDBAdapter(client),
   providers: [
     GoogleProvider({
