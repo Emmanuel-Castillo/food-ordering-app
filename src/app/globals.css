@@ -21,6 +21,15 @@ button, .button {
     @apply border rounded-xl border-gray-300 px-6 py-2
 }
 
+.navLink {
+    @apply flex justify-center w-full text-gray-700 font-semibold;
+    @apply border rounded-xl border-gray-300 py-1
+}
+
+.navLink:hover {
+    @apply bg-gray-300
+}
+
 button[type="submit"], .submit, button.primary {
     @apply border-primary bg-primary text-white;
 }

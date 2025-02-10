@@ -6,11 +6,11 @@ import { CartContext } from "../AppContext";
 import ShoppingCart from "@/components/icons/ShoppingCart";
 import Bars3 from "@/components/icons/Bars3";
 
-function AuthLinks({ status, userName }) {
+function AuthLinks({ status, userName, mobileNavOpen }) {
   if (status === "authenticated") {
     return (
       <>
-        <Link className="whitespace-nowrap" href={"/profile"}>
+        <Link className={mobileNavOpen ? "navLink" : "whitespace-nowrap"} href={"/profile"}>
           Hello, {userName}
         </Link>
         <button
@@ -75,11 +75,11 @@ export default function Header() {
           className="md:hidden p-4 bg-gray-200 rounded-lg mt-2 flex flex-col gap-2 text-center"
           onClick={() => setMobileNavOpen(false)}
         >
-          <Link href={"/"}>Home</Link>
-          <Link href={"/menu"}>Menu</Link>
-          <Link href={"/#about"}>About</Link>
-          <Link href={"/#contact"}>Contact</Link>
-          <AuthLinks status={status} userName={userName} />
+          <Link className="navLink" href={"/"}>Home</Link>
+          <Link className="navLink" href={"/menu"}>Menu</Link>
+          <Link className="navLink" href={"/#about"}>About</Link>
+          <Link className="navLink" href={"/#contact"}>Contact</Link>
+          <AuthLinks status={status} userName={userName} mobileNavOpen={mobileNavOpen}/>
         </div>
       )}
 
