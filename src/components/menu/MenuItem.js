@@ -21,14 +21,14 @@ export default function MenuItem(menuItem) {
 
     const promise = new Promise(async (resolve, reject) => {
       const response = await addToCart(menuItem, selectedSize, selectedExtras);
-      response ? resolve() : reject()
-    })
-    
+      response ? resolve() : reject();
+    });
+
     toast.promise(promise, {
-      loading: 'Adding item to cart...',
-      success: 'Item added to cart!',
-      error: 'Error, something went wrong...'
-    })
+      loading: "Adding item to cart...",
+      success: "Item added to cart!",
+      error: "Error, something went wrong...",
+    });
     setShowPopup(false);
   }
 
@@ -121,16 +121,18 @@ export default function MenuItem(menuItem) {
                   ))}
                 </div>
               )}
-                <button
+            </div>
+            <div className="sticky bottom-2 w-full p-2">
+              <button
                 type="button"
-                  className="mt-4 bg-primary text-white rounded-full px-8 py-2"
-                  onClick={handleAddToCartButtonClick}
-                >
-                  Add to Cart +${selectedPrice}
-                </button>
+                className="mt-4 bg-primary text-white rounded-full px-8 py-2 sticky"
+                onClick={handleAddToCartButtonClick}
+              >
+                Add to Cart +${selectedPrice}
+              </button>
 
               <button
-                className="sticky bottom-2 mt-4"
+                className="mt-4"
                 type="button"
                 onClick={() => setShowPopup(false)}
               >
